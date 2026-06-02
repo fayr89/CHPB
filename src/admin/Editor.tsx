@@ -5,6 +5,7 @@ import { mergeContent } from '@/content/merge';
 import { useContentCtx } from '@/content/ContentContext';
 import type { SiteContent } from '@/content/types';
 import { Field, ImageInput, Section, ListEditor, StringListEditor, uid } from './ui';
+import { ChangePassword } from './ChangePassword';
 
 export function Editor() {
   const { reload } = useContentCtx();
@@ -320,6 +321,11 @@ export function Editor() {
               </>
             )}
           />
+        </Section>
+
+        {/* Account / password */}
+        <Section title="Аккаунт — смена пароля">
+          <ChangePassword />
         </Section>
 
         <div className="flex justify-end py-6">
