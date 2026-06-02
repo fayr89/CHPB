@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useContent } from '@/content/ContentContext';
-import { LEAD_INTAKE_URL } from '@/lib/config';
+import { LEAD_INTAKE_URL, CRM_PROJECT_ID } from '@/lib/config';
 import { trackGoal } from '@/lib/metrika';
 
 export default function CTA() {
@@ -52,6 +52,7 @@ export default function CTA() {
           phone: formData.phone,
           email: formData.email || undefined,
           source: 'website',
+          project_id: CRM_PROJECT_ID,
           description: descParts.join('\n'),
         }),
       });

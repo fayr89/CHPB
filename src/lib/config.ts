@@ -25,4 +25,8 @@ export const SUPABASE_ANON_KEY =
 // Public lead-intake endpoint, proxied through our domain (see nginx config).
 export const LEAD_INTAKE_URL = env.VITE_LEAD_INTAKE_URL || `${PROXY_ORIGIN}/api/lead-intake`;
 
+// CRM project id for leads from this site («ЧПБ»). Sent as project_id so leads
+// appear with the «ЧПБ» project sticker in the CRM.
+export const CRM_PROJECT_ID = 1;
+
 export const SITE_IMAGES_BUCKET = 'site-images';

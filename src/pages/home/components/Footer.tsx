@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useContent } from '@/content/ContentContext';
-import { LEAD_INTAKE_URL } from '@/lib/config';
+import { LEAD_INTAKE_URL, CRM_PROJECT_ID } from '@/lib/config';
 import { trackGoal } from '@/lib/metrika';
 
 export default function Footer() {
@@ -20,6 +20,7 @@ export default function Footer() {
           first_name: 'Подписка на рассылку',
           email,
           source: 'website',
+          project_id: CRM_PROJECT_ID,
           description: '🔖 Подписка на рассылку — сайт «Черным по белому» (ЧПБ)',
         }),
       });
