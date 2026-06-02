@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useContent } from '@/content/ContentContext';
 import { LEAD_INTAKE_URL } from '@/lib/config';
+import { trackGoal } from '@/lib/metrika';
 
 export default function CTA() {
   const { cta, form } = useContent();
@@ -57,6 +58,7 @@ export default function CTA() {
 
       if (response.ok) {
         setStatus('success');
+        trackGoal('lead');
         setFormData({ name: '', phone: '', email: '', service: '', description: '', company_website: '' });
         setConsent(false);
         setTimeout(() => setStatus('idle'), 4000);

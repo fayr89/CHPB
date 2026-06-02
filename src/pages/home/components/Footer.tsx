@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useContent } from '@/content/ContentContext';
 import { LEAD_INTAKE_URL } from '@/lib/config';
+import { trackGoal } from '@/lib/metrika';
 
 export default function Footer() {
   const { brand, nav, footer, legal } = useContent();
@@ -25,6 +26,7 @@ export default function Footer() {
 
       if (response.ok) {
         setSubStatus('success');
+        trackGoal('newsletter');
         setEmail('');
         setTimeout(() => setSubStatus('idle'), 4000);
       } else {
