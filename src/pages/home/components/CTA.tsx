@@ -1,20 +1,22 @@
 import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
-
-const FORM_URL = 'https://readdy.ai/api/form/d8f4devf63rh9ldpubpg';
+import { useContent } from '@/content/ContentContext';
+import { LEAD_INTAKE_URL } from '@/lib/config';
 
 export default function CTA() {
-  const { t } = useTranslation();
+  const { cta, form } = useContent();
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
     email: '',
     service: '',
     description: '',
+    company_website: '', // honeypot — real users never see/fill this
   });
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
+  ) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
@@ -23,20 +25,26 @@ export default function CTA() {
     setStatus('loading');
 
     try {
-      const formBody = new URLSearchParams();
-      Object.entries(formData).forEach(([key, value]) => {
-        formBody.append(key, value);
-      });
+      const serviceLabel =
+        cta.serviceOptions.find((o) => o.value === formData.service)?.label ?? formData.service;
 
-      const response = await fetch(FORM_URL, {
+      const response = await fetch(LEAD_INTAKE_URL, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: formBody.toString(),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: formData.name,
+          phone: formData.phone,
+          email: formData.email,
+          service: serviceLabel,
+          description: formData.description,
+          company_website: formData.company_website,
+          source: 'website',
+        }),
       });
 
       if (response.ok) {
         setStatus('success');
-        setFormData({ name: '', phone: '', email: '', service: '', description: '' });
+        setFormData({ name: '', phone: '', email: '', service: '', description: '', company_website: '' });
         setTimeout(() => setStatus('idle'), 4000);
       } else {
         setStatus('error');
@@ -52,7 +60,7 @@ export default function CTA() {
     <section id="cta" className="relative py-24 md:py-36 px-6 md:px-12 lg:px-20">
       <div className="absolute inset-0">
         <img
-          src="https://readdy.ai/api/search-image?query=Warm%20industrial%20workshop%20interior%20with%20powder%20coated%20metal%20parts%20in%20various%20stages%2C%20large%20spray%20booth%20in%20background%2C%20professional%20workshop%20environment%20with%20warm%20amber%20lighting%2C%20organized%20industrial%20space%2C%20atmospheric%20photography%20with%20depth%20and%20texture%2C%20rich%20warm%20metallic%20tones&width=1800&height=1000&seq=cta-bg-01&orientation=landscape"
+          src={cta.bgImage}
           alt="Цех порошковой покраски"
           className="w-full h-full object-cover object-top"
         />
@@ -62,25 +70,35 @@ export default function CTA() {
       <div className="relative z-10 max-w-[1400px] mx-auto">
         <div className="text-center mb-12">
           <h2 className="font-heading text-3xl md:text-5xl lg:text-6xl font-extrabold text-white tracking-wide mb-6">
-            {t('cta.title')}
+            {cta.title}
           </h2>
           <p className="text-white/75 text-sm md:text-base max-w-xl mx-auto leading-relaxed">
-            {t('cta.subtitle')}
+            {cta.subtitle}
           </p>
         </div>
 
         <form
           onSubmit={handleSubmit}
-          data-readdy-form
           className="max-w-lg mx-auto bg-background-50/10 backdrop-blur-md rounded-lg p-8 border border-white/10"
         >
           <div className="flex flex-col gap-4">
+            {/* Honeypot field (hidden from real users) */}
+            <input
+              type="text"
+              name="company_website"
+              value={formData.company_website}
+              onChange={handleChange}
+              className="hidden"
+              tabIndex={-1}
+              autoComplete="off"
+              aria-hidden="true"
+            />
             <input
               type="text"
               name="name"
               value={formData.name}
               onChange={handleChange}
-              placeholder={t('form.name')}
+              placeholder={form.name}
               required
               className="w-full px-4 py-3 rounded-md bg-white/95 text-foreground-950 text-sm placeholder:text-foreground-400 border border-white/10 focus:outline-none focus:ring-2 focus:ring-accent-500 transition-all"
             />
@@ -89,7 +107,7 @@ export default function CTA() {
               name="phone"
               value={formData.phone}
               onChange={handleChange}
-              placeholder={t('form.phone')}
+              placeholder={form.phone}
               required
               className="w-full px-4 py-3 rounded-md bg-white/95 text-foreground-950 text-sm placeholder:text-foreground-400 border border-white/10 focus:outline-none focus:ring-2 focus:ring-accent-500 transition-all"
             />
@@ -98,7 +116,7 @@ export default function CTA() {
               name="email"
               value={formData.email}
               onChange={handleChange}
-              placeholder={t('form.email')}
+              placeholder={form.email}
               className="w-full px-4 py-3 rounded-md bg-white/95 text-foreground-950 text-sm placeholder:text-foreground-400 border border-white/10 focus:outline-none focus:ring-2 focus:ring-accent-500 transition-all"
             />
             <select
@@ -107,18 +125,18 @@ export default function CTA() {
               onChange={handleChange}
               className="w-full px-4 py-3 rounded-md bg-white/95 text-foreground-950 text-sm border border-white/10 focus:outline-none focus:ring-2 focus:ring-accent-500 transition-all"
             >
-              <option value="">{t('form.service')}</option>
-              <option value="discs">Покраска дисков</option>
-              <option value="structures">Металлоконструкции</option>
-              <option value="forged">Кованые изделия</option>
-              <option value="auto">Автодетали</option>
-              <option value="other">Другое</option>
+              <option value="">{form.service}</option>
+              {cta.serviceOptions.map((o) => (
+                <option key={o.id} value={o.value}>
+                  {o.label}
+                </option>
+              ))}
             </select>
             <textarea
               name="description"
               value={formData.description}
               onChange={handleChange}
-              placeholder={t('form.description')}
+              placeholder={form.description}
               rows={3}
               maxLength={500}
               className="w-full px-4 py-3 rounded-md bg-white/95 text-foreground-950 text-sm placeholder:text-foreground-400 border border-white/10 focus:outline-none focus:ring-2 focus:ring-accent-500 transition-all resize-none"
@@ -134,7 +152,7 @@ export default function CTA() {
               <i className="ri-loader-4-line animate-spin"></i>
             ) : (
               <>
-                <span>{t('cta.button')}</span>
+                <span>{cta.button}</span>
                 <i className="ri-arrow-right-up-line"></i>
               </>
             )}
@@ -142,12 +160,12 @@ export default function CTA() {
 
           {status === 'success' && (
             <p className="text-center text-green-400 text-sm mt-4 font-medium">
-              {t('form.success')}
+              {form.success}
             </p>
           )}
           {status === 'error' && (
             <p className="text-center text-red-400 text-sm mt-4 font-medium">
-              {t('form.error')}
+              {form.error}
             </p>
           )}
         </form>

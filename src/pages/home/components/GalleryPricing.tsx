@@ -1,9 +1,7 @@
-import { useTranslation } from 'react-i18next';
-import { galleryItems } from '@/mocks/gallery';
-import { pricingItems } from '@/mocks/pricing';
+import { useContent } from '@/content/ContentContext';
 
 export default function GalleryPricing() {
-  const { t } = useTranslation();
+  const { gallery, pricing } = useContent();
 
   return (
     <>
@@ -11,11 +9,11 @@ export default function GalleryPricing() {
       <section id="gallery" className="py-20 md:py-28 px-6 md:px-12 lg:px-20">
         <div className="max-w-[1400px] mx-auto">
           <h2 className="font-heading text-3xl md:text-5xl font-extrabold text-foreground-950 text-center mb-14">
-            {t('gallery.title')}
+            {gallery.title}
           </h2>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {galleryItems.map((item) => (
+            {gallery.items.map((item) => (
               <div
                 key={item.id}
                 className="bg-background-50 rounded-lg overflow-hidden group cursor-pointer"
@@ -52,11 +50,11 @@ export default function GalleryPricing() {
       <section id="pricing" className="py-20 md:py-28 px-6 md:px-12 lg:px-20 bg-background-100">
         <div className="max-w-[1400px] mx-auto">
           <h2 className="font-heading text-3xl md:text-5xl font-extrabold text-foreground-950 text-center mb-14">
-            {t('pricing.title')}
+            {pricing.title}
           </h2>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {pricingItems.map((item) => (
+            {pricing.items.map((item) => (
               <div
                 key={item.id}
                 className="bg-background-50 rounded-lg p-6 flex flex-col items-center text-center"

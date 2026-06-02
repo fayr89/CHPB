@@ -1,10 +1,8 @@
 import { useState, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
-
-const LOGO_URL = 'https://storage.readdy-site.link/project_files/dac7b5c1-5ea6-4978-906f-e0865bae6c6e/6e0b8e92-7eaf-472d-8825-64f314f1931c_Gemini_Generated_Image_nbmue2nbmue2nbmu.png';
+import { useContent } from '@/content/ContentContext';
 
 export default function Navbar() {
-  const { t } = useTranslation();
+  const { brand, nav } = useContent();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -17,11 +15,11 @@ export default function Navbar() {
   }, []);
 
   const navLinks = [
-    { href: '#services', label: t('nav.services') },
-    { href: '#gallery', label: t('nav.gallery') },
-    { href: '#pricing', label: t('nav.pricing') },
-    { href: '#reviews', label: t('nav.reviews') },
-    { href: '#contacts', label: t('nav.contacts') },
+    { href: '#services', label: nav.services },
+    { href: '#gallery', label: nav.gallery },
+    { href: '#pricing', label: nav.pricing },
+    { href: '#reviews', label: nav.reviews },
+    { href: '#contacts', label: nav.contacts },
   ];
 
   return (
@@ -35,8 +33,8 @@ export default function Navbar() {
       <div className="flex items-center justify-between pl-3 md:pl-4 pr-6 md:pr-12 h-28 md:h-32">
         <a href="/" className="flex-shrink-0 -ml-1">
           <img
-            src={LOGO_URL}
-            alt="Черным по белому"
+            src={brand.logo}
+            alt={brand.name}
             className="h-[6.24rem] md:h-[7.8rem] w-auto object-contain"
           />
         </a>
@@ -79,7 +77,7 @@ export default function Navbar() {
                 : 'bg-white text-primary-900 hover:bg-white/90'
             }`}
           >
-            {t('nav.request')}
+            {nav.request}
           </a>
         </div>
 
@@ -113,7 +111,7 @@ export default function Navbar() {
               onClick={() => setMobileOpen(false)}
               className="mt-2 px-5 py-3 rounded-full text-sm font-semibold text-center bg-primary-500 text-white hover:bg-primary-600 transition-colors cursor-pointer"
             >
-              {t('nav.request')}
+              {nav.request}
             </a>
           </div>
         </div>

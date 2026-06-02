@@ -1,23 +1,22 @@
-import { useTranslation } from 'react-i18next';
-import { advantages } from '@/mocks/advantages';
+import { useContent } from '@/content/ContentContext';
 
 export default function Features() {
-  const { t } = useTranslation();
+  const { features } = useContent();
 
   return (
     <section className="py-20 md:py-28 px-6 md:px-12 lg:px-20 bg-background-100">
       <div className="max-w-[1400px] mx-auto">
         <div className="mb-14">
           <p className="text-foreground-500 text-xs font-semibold uppercase tracking-widest mb-4">
-            {t('features.label')}
+            {features.label}
           </p>
           <h2 className="font-heading text-3xl md:text-5xl font-extrabold text-foreground-950 leading-tight max-w-2xl">
-            {t('features.title')}
+            {features.title}
           </h2>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {advantages.map((item) => (
+          {features.items.map((item) => (
             <div
               key={item.id}
               className="bg-background-50 rounded-lg p-8 md:p-10 group hover:bg-background-50 transition-colors duration-300"
