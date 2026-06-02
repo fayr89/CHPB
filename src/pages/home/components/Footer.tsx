@@ -16,10 +16,10 @@ export default function Footer() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          name: 'Подписка на рассылку',
+          first_name: 'Подписка на рассылку',
           email,
-          source: 'newsletter',
-          description: 'Email-подписка с сайта',
+          source: 'website',
+          description: '🔖 Подписка на рассылку — сайт «Черным по белому» (ЧПБ)',
         }),
       });
 

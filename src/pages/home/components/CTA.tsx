@@ -25,20 +25,31 @@ export default function CTA() {
     setStatus('loading');
 
     try {
+      // Honeypot — real users never fill this hidden field
+      if (formData.company_website.trim()) {
+        setStatus('success');
+        setFormData({ name: '', phone: '', email: '', service: '', description: '', company_website: '' });
+        setTimeout(() => setStatus('idle'), 4000);
+        return;
+      }
+
       const serviceLabel =
         cta.serviceOptions.find((o) => o.value === formData.service)?.label ?? formData.service;
+      const tokens = formData.name.trim().split(/\s+/).filter(Boolean);
+      const descParts = ['🔖 Заявка с сайта «Черным по белому» (ЧПБ)'];
+      if (serviceLabel) descParts.push(`Услуга: ${serviceLabel}`);
+      if (formData.description.trim()) descParts.push(formData.description.trim());
 
       const response = await fetch(LEAD_INTAKE_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          name: formData.name,
+          first_name: tokens[0] || formData.name.trim() || 'Заявка',
+          last_name: tokens.length > 1 ? tokens.slice(1).join(' ') : undefined,
           phone: formData.phone,
-          email: formData.email,
-          service: serviceLabel,
-          description: formData.description,
-          company_website: formData.company_website,
+          email: formData.email || undefined,
           source: 'website',
+          description: descParts.join('\n'),
         }),
       });
 
