@@ -16,6 +16,8 @@ export const defaultContent: SiteContent = {
     ogTitle: 'Черным по белому — Порошковая покраска металла в Новосибирске',
     ogDescription:
       'Профессиональная порошковая покраска металла. Качество, проверенное временем. Более 10 000 заказов с 2015 года.',
+    ogImage:
+      'https://readdy.ai/api/search-image?query=Warm%20industrial%20workshop%20interior%20with%20powder%20coated%20metal%20parts%20in%20various%20stages%2C%20large%20spray%20booth%20in%20background%2C%20professional%20workshop%20environment%20with%20warm%20amber%20lighting%2C%20organized%20industrial%20space%2C%20atmospheric%20photography%20with%20depth%20and%20texture%2C%20rich%20warm%20metallic%20tones&width=1200&height=630&seq=cta-bg-01&orientation=landscape',
   },
   brand: {
     logo: LOGO_URL,

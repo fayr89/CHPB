@@ -58,6 +58,7 @@ export interface SiteContent {
     keywords: string;
     ogTitle: string;
     ogDescription: string;
+    ogImage: string;
   };
   brand: {
     logo: string;

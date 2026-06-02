@@ -112,6 +112,7 @@ export function Editor() {
           <Field label="Ключевые слова (keywords)" value={d.seo.keywords} onChange={(v) => set('seo', { keywords: v })} textarea />
           <Field label="Заголовок для соцсетей (og:title)" value={d.seo.ogTitle} onChange={(v) => set('seo', { ogTitle: v })} />
           <Field label="Описание для соцсетей (og:description)" value={d.seo.ogDescription} onChange={(v) => set('seo', { ogDescription: v })} textarea />
+          <ImageInput label="Картинка для соцсетей (og:image, ~1200×630)" value={d.seo.ogImage} onChange={(v) => set('seo', { ogImage: v })} />
         </Section>
 
         {/* Brand & navigation */}
