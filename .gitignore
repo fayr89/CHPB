@@ -1,0 +1,22 @@
+# Dependencies
+node_modules
+
+# Build output
+out
+dist
+
+# Auto-generated type declarations (unplugin-auto-import)
+auto-imports.d.ts
+components.d.ts
+
+# Local env
+.env
+.env.*
+*.local
+
+# Editor / OS
+.DS_Store
+*.log
+
+# Vercel
+.vercel
