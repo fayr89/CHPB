@@ -258,4 +258,9 @@ export const defaultContent: SiteContent = {
       { id: 's3', label: 'Instagram', icon: 'ri-instagram-line', url: '#' },
     ],
   },
+  legal: {
+    companyName: '',
+    inn: '',
+    ogrn: '',
+  },
 };

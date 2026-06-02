@@ -137,4 +137,9 @@ export interface SiteContent {
     bigText: string;
     socials: SocialLink[];
   };
+  legal: {
+    companyName: string;
+    inn: string;
+    ogrn: string;
+  };
 }

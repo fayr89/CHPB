@@ -323,6 +323,18 @@ export function Editor() {
           />
         </Section>
 
+        {/* Legal / requisites */}
+        <Section title="Реквизиты и право (для политики конфиденциальности)">
+          <Field label="Юр. название (ИП / ООО)" value={d.legal.companyName} onChange={(v) => set('legal', { companyName: v })} />
+          <div className="grid grid-cols-2 gap-x-4">
+            <Field label="ИНН" value={d.legal.inn} onChange={(v) => set('legal', { inn: v })} />
+            <Field label="ОГРН / ОГРНИП" value={d.legal.ogrn} onChange={(v) => set('legal', { ogrn: v })} />
+          </div>
+          <p className="text-xs text-gray-400 mt-1">
+            Показываются в подвале сайта и на странице «Политика конфиденциальности» (/privacy).
+          </p>
+        </Section>
+
         {/* Account / password */}
         <Section title="Аккаунт — смена пароля">
           <ChangePassword />

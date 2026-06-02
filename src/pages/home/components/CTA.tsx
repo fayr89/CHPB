@@ -13,6 +13,7 @@ export default function CTA() {
     company_website: '', // honeypot — real users never see/fill this
   });
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [consent, setConsent] = useState(false);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
@@ -29,6 +30,7 @@ export default function CTA() {
       if (formData.company_website.trim()) {
         setStatus('success');
         setFormData({ name: '', phone: '', email: '', service: '', description: '', company_website: '' });
+        setConsent(false);
         setTimeout(() => setStatus('idle'), 4000);
         return;
       }
@@ -56,6 +58,7 @@ export default function CTA() {
       if (response.ok) {
         setStatus('success');
         setFormData({ name: '', phone: '', email: '', service: '', description: '', company_website: '' });
+        setConsent(false);
         setTimeout(() => setStatus('idle'), 4000);
       } else {
         setStatus('error');
@@ -153,6 +156,28 @@ export default function CTA() {
               className="w-full px-4 py-3 rounded-md bg-white/95 text-foreground-950 text-sm placeholder:text-foreground-400 border border-white/10 focus:outline-none focus:ring-2 focus:ring-accent-500 transition-all resize-none"
             ></textarea>
           </div>
+
+          <label className="flex items-start gap-2 mt-4 cursor-pointer">
+            <input
+              type="checkbox"
+              checked={consent}
+              onChange={(e) => setConsent(e.target.checked)}
+              required
+              className="mt-0.5 accent-accent-500"
+            />
+            <span className="text-white/70 text-xs leading-relaxed">
+              Я соглашаюсь с{' '}
+              <a
+                href="/privacy"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline hover:text-white"
+              >
+                политикой конфиденциальности
+              </a>{' '}
+              и даю согласие на обработку персональных данных
+            </span>
+          </label>
 
           <button
             type="submit"

@@ -3,7 +3,7 @@ import { useContent } from '@/content/ContentContext';
 import { LEAD_INTAKE_URL } from '@/lib/config';
 
 export default function Footer() {
-  const { brand, nav, footer } = useContent();
+  const { brand, nav, footer, legal } = useContent();
   const [email, setEmail] = useState('');
   const [subStatus, setSubStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
 
@@ -149,6 +149,19 @@ export default function Footer() {
           <p className="text-white/25 text-xs mt-6">
             {footer.copyright}
           </p>
+          {(legal.companyName || legal.inn || legal.ogrn) && (
+            <p className="text-white/20 text-[11px] mt-2">
+              {legal.companyName}
+              {legal.inn ? ` · ИНН ${legal.inn}` : ''}
+              {legal.ogrn ? ` · ОГРН ${legal.ogrn}` : ''}
+            </p>
+          )}
+          <a
+            href="/privacy"
+            className="inline-block text-white/30 hover:text-white/70 text-[11px] mt-2 underline transition-colors"
+          >
+            Политика конфиденциальности
+          </a>
         </div>
       </div>
     </footer>
