@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /sb/
+Disallow: /api/
+
+Sitemap: https://полимерка-54.рф/sitemap.xml
