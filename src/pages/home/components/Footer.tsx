@@ -52,11 +52,9 @@ export default function Footer() {
         <div className="max-w-[1400px] mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
           {/* Col 1: Logo + Contacts */}
           <div>
-            <img
-              src={brand.logo}
-              alt={brand.name}
-              className="h-10 w-auto object-contain mb-6 brightness-0 invert"
-            />
+            <div className="font-heading text-lg font-extrabold text-white tracking-wide mb-6">
+              {brand.name}
+            </div>
             <div className="space-y-3 text-sm text-white/50">
               <p>{footer.address}</p>
               <p>{footer.phone}</p>
