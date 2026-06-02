@@ -104,6 +104,15 @@ export function Editor() {
           Меняйте любой текст и изображения. После правок нажмите «Сохранить» — сайт обновится сразу.
         </p>
 
+        {/* SEO */}
+        <Section title="SEO — поисковая оптимизация">
+          <Field label="Заголовок страницы (title)" value={d.seo.title} onChange={(v) => set('seo', { title: v })} textarea />
+          <Field label="Описание (meta description)" value={d.seo.description} onChange={(v) => set('seo', { description: v })} textarea />
+          <Field label="Ключевые слова (keywords)" value={d.seo.keywords} onChange={(v) => set('seo', { keywords: v })} textarea />
+          <Field label="Заголовок для соцсетей (og:title)" value={d.seo.ogTitle} onChange={(v) => set('seo', { ogTitle: v })} />
+          <Field label="Описание для соцсетей (og:description)" value={d.seo.ogDescription} onChange={(v) => set('seo', { ogDescription: v })} textarea />
+        </Section>
+
         {/* Brand & navigation */}
         <Section title="Логотип и меню" defaultOpen>
           <ImageInput label="Логотип" value={d.brand.logo} onChange={(v) => set('brand', { logo: v })} />

@@ -6,10 +6,12 @@ import GalleryPricing from './components/GalleryPricing';
 import Reviews from './components/Reviews';
 import CTA from './components/CTA';
 import Footer from './components/Footer';
+import { SeoHead } from '@/content/SeoHead';
 
 export default function Home() {
   return (
     <>
+      <SeoHead />
       <Navbar />
       <main>
         <Hero />

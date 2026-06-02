@@ -52,6 +52,13 @@ export interface SocialLink {
 }
 
 export interface SiteContent {
+  seo: {
+    title: string;
+    description: string;
+    keywords: string;
+    ogTitle: string;
+    ogDescription: string;
+  };
   brand: {
     logo: string;
     name: string;

@@ -6,6 +6,17 @@ const LOGO_URL =
 // Initial content — mirrors the original hard-coded copy/images. The admin panel
 // overrides these values; anything left unedited falls back to here.
 export const defaultContent: SiteContent = {
+  seo: {
+    title:
+      'Черным по белому — Порошковая покраска металла в Новосибирске | Качественная полимерная окраска',
+    description:
+      'Профессиональная порошковая покраска металла в Новосибирске. Современное оборудование, более 10000 выполненных заказов. Гарантия до 5 лет. Бесплатная консультация и расчёт стоимости.',
+    keywords:
+      'порошковая покраска металла, полимерная окраска, покраска металлоконструкций, покраска дисков, порошковое покрытие, Новосибирск',
+    ogTitle: 'Черным по белому — Порошковая покраска металла в Новосибирске',
+    ogDescription:
+      'Профессиональная порошковая покраска металла. Качество, проверенное временем. Более 10 000 заказов с 2015 года.',
+  },
   brand: {
     logo: LOGO_URL,
     name: 'Черным по белому',
@@ -231,7 +242,7 @@ export const defaultContent: SiteContent = {
     error: 'Произошла ошибка. Пожалуйста, попробуйте снова.',
   },
   footer: {
-    address: 'г. Москва, ул. Промышленная, д. 15, стр. 3',
+    address: 'г. Новосибирск, ул. Промышленная, д. 15',
     phone: '+7 (495) 123-45-67',
     email: 'info@chernyim-po-belomu.ru',
     newsletterTitle: 'РАССЫЛКА',
