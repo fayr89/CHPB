@@ -1,10 +1,14 @@
-// Public lead-intake endpoint for the «Черным по белому» marketing site.
+// Public lead-intake endpoint for the «Черным по белому» (ЧПБ) marketing site.
 //
 // Deployed to the CRM Supabase project (crm-v3) — NOT this one — with
 // verify_jwt = false, so the public site can POST a lead without any CRM
 // credentials being shipped to the browser. It uses the auto-injected
 // service-role key server-side to insert into `public.leads`, where the lead
-// appears in the CRM list and the first ("new") kanban column.
+// appears in the CRM "Leads" section and the first ("new") kanban column.
+//
+// NOTE: leads.source has a CHECK constraint limited to
+// website|referral|cold_call|social|event|advertisement|other, so we keep
+// source = "website" and mark the ЧПБ origin in the free-text description.
 //
 // Deploy:  supabase functions deploy lead-intake --no-verify-jwt --project-ref fwsrmodnfuuidzvwlfog
 // (kept here for version control; it was deployed via the Supabase API.)
@@ -18,6 +22,7 @@ const corsHeaders = {
 };
 
 const OWNER_ID = 1; // fayr89@yandex.ru (admin) in crm-v3.users
+const SOURCE = 'website'; // must be one of the allowed leads_source_check values
 
 function json(body: unknown, status = 200): Response {
   return new Response(JSON.stringify(body), {
@@ -49,14 +54,19 @@ Deno.serve(async (req: Request) => {
   const email = clip(body.email, 200);
   const service = clip(body.service, 200);
   const description = clip(body.description, 2000);
+  const isNewsletter = clip(body.source, 50) === 'newsletter';
 
   if (!name) return json({ error: 'name is required' }, 422);
   if (!phone && !email) return json({ error: 'phone or email is required' }, 422);
 
-  const parts: string[] = [];
+  const tag = isNewsletter
+    ? '🔖 Подписка (рассылка) — сайт «Черным по белому» (ЧПБ)'
+    : '🔖 Заявка с сайта «Черным по белому» (ЧПБ)';
+
+  const parts: string[] = [tag];
   if (service) parts.push(`Услуга: ${service}`);
   if (description) parts.push(description);
-  const fullDescription = parts.length ? parts.join('\n') : null;
+  const fullDescription = parts.join('\n');
 
   const tokens = name.split(/\s+/).filter(Boolean);
   const firstName = tokens[0] || name;
@@ -73,7 +83,7 @@ Deno.serve(async (req: Request) => {
     email: email || null,
     phone: phone || null,
     description: fullDescription,
-    source: 'website',
+    source: SOURCE,
     status: 'new',
     owner_id: OWNER_ID,
   });
