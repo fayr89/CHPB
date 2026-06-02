@@ -1,0 +1,46 @@
+name: Deploy to Selectel server
+
+on:
+  push:
+    branches: [claude/bold-knuth-IL8Qm, main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-server
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Deploy out/ to server
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SERVER: root@176.114.90.92
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "$SSH_PRIVATE_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -H 176.114.90.92 >> ~/.ssh/known_hosts 2>/dev/null
+          tar czf site.tgz -C out .
+          scp -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=accept-new site.tgz "$SERVER:/tmp/chpb-site.tgz"
+          ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=accept-new "$SERVER" '
+            set -e
+            mkdir -p /var/www/chpb
+            rm -rf /var/www/chpb/assets
+            tar xzf /tmp/chpb-site.tgz -C /var/www/chpb
+            chown -R www-data:www-data /var/www/chpb
+            rm -f /tmp/chpb-site.tgz
+          '
