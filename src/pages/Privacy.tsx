@@ -48,7 +48,9 @@ export default function Privacy() {
         <Clause n="2" title="Оператор">
           Оператором персональных данных является {operator || 'владелец Сайта'}.
           {legal.inn ? ` ИНН: ${legal.inn}.` : ''}
+          {legal.kpp ? ` КПП: ${legal.kpp}.` : ''}
           {legal.ogrn ? ` ОГРН: ${legal.ogrn}.` : ''}
+          {legal.legalAddress ? ` Юридический адрес: ${legal.legalAddress}.` : ''}
           {contacts ? ` Контактные данные: ${contacts}.` : ''}
         </Clause>
 

@@ -141,6 +141,9 @@ export interface SiteContent {
   legal: {
     companyName: string;
     inn: string;
+    kpp: string;
     ogrn: string;
+    legalAddress: string;
+    extra: string;
   };
 }

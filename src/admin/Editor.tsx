@@ -325,12 +325,15 @@ export function Editor() {
         </Section>
 
         {/* Legal / requisites */}
-        <Section title="Реквизиты и право (для политики конфиденциальности)">
+        <Section title="Реквизиты и право (подвал + политика)">
           <Field label="Юр. название (ИП / ООО)" value={d.legal.companyName} onChange={(v) => set('legal', { companyName: v })} />
-          <div className="grid grid-cols-2 gap-x-4">
+          <div className="grid grid-cols-3 gap-x-4">
             <Field label="ИНН" value={d.legal.inn} onChange={(v) => set('legal', { inn: v })} />
+            <Field label="КПП" value={d.legal.kpp} onChange={(v) => set('legal', { kpp: v })} />
             <Field label="ОГРН / ОГРНИП" value={d.legal.ogrn} onChange={(v) => set('legal', { ogrn: v })} />
           </div>
+          <Field label="Юридический адрес" value={d.legal.legalAddress} onChange={(v) => set('legal', { legalAddress: v })} />
+          <Field label="Доп. реквизиты (банк, р/с, режим работы — по желанию)" value={d.legal.extra} onChange={(v) => set('legal', { extra: v })} textarea />
           <p className="text-xs text-gray-400 mt-1">
             Показываются в подвале сайта и на странице «Политика конфиденциальности» (/privacy).
           </p>

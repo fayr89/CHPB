@@ -263,6 +263,9 @@ export const defaultContent: SiteContent = {
   legal: {
     companyName: '',
     inn: '',
+    kpp: '',
     ogrn: '',
+    legalAddress: '',
+    extra: '',
   },
 };

@@ -150,12 +150,19 @@ export default function Footer() {
           <p className="text-white/25 text-xs mt-6">
             {footer.copyright}
           </p>
-          {(legal.companyName || legal.inn || legal.ogrn) && (
-            <p className="text-white/20 text-[11px] mt-2">
-              {legal.companyName}
-              {legal.inn ? ` · ИНН ${legal.inn}` : ''}
-              {legal.ogrn ? ` · ОГРН ${legal.ogrn}` : ''}
-            </p>
+          {(legal.companyName || legal.inn || legal.kpp || legal.ogrn || legal.legalAddress || legal.extra) && (
+            <div className="mt-6 text-white/30 text-[11px] md:text-xs leading-relaxed space-y-1">
+              {legal.companyName && <p className="text-white/45 font-medium">{legal.companyName}</p>}
+              {(legal.inn || legal.kpp || legal.ogrn) && (
+                <p className="flex flex-wrap gap-x-4 gap-y-0.5">
+                  {legal.inn && <span>ИНН&nbsp;{legal.inn}</span>}
+                  {legal.kpp && <span>КПП&nbsp;{legal.kpp}</span>}
+                  {legal.ogrn && <span>ОГРН&nbsp;{legal.ogrn}</span>}
+                </p>
+              )}
+              {legal.legalAddress && <p>Юридический адрес: {legal.legalAddress}</p>}
+              {legal.extra && <p className="whitespace-pre-line">{legal.extra}</p>}
+            </div>
           )}
           <a
             href="/privacy"
