@@ -4,6 +4,9 @@ export default function Reviews() {
   const { reviews } = useContent();
   const items = reviews.items;
 
+  // Don't render the section until there are real reviews (avoids fake/template reviews)
+  if (!items.length) return null;
+
   return (
     <section id="reviews" className="py-20 md:py-28 px-6 md:px-12 lg:px-20 bg-background-100">
       <div className="max-w-[1400px] mx-auto">
